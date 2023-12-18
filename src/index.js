@@ -3,11 +3,48 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import PostList from './pages/PostList';
+import Post from './pages/Post';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Provider store={store}><App /></Provider>,
+  },
+  {
+    path: '/posts',
+    element: <PostList />
+  },
+   {
+    path: '/post',
+    element: <Post />
+  },
+  {
+    path: '/registration',
+    element: <Registration />
+  }
+  ,
+  {
+    path: '/login',
+    element: <Login />
+  }
+]);
+
+
+
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
+   
   </React.StrictMode>
 );
 
