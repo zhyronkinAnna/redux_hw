@@ -2,20 +2,28 @@ import { Button, Form, Input } from "antd";
 import axios from "axios";
 import React from "react";
 import api from "../api";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../slices/authThunk";
+import { Navigate, useNavigate } from "react-router-dom";
+import { getToken } from "../utils/helperFunctions";
 
 
 const Login = () => {
+  const { token, loading, error } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
+  if (token || getToken()) {
+   return <Navigate to="/" />
+  }
 
   const onFinish = async (values) => {
-    const response = await api.post("/login", values);
-    console.log(response);
+    dispatch(login(values));
   };
-
 
   return (
     <div>
       <h1>Login</h1>
+      {error}
       <Form
         name="basic"
         labelCol={{
@@ -63,9 +71,8 @@ const Login = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
+          {loading ? 'Loading...' : <Button type="primary" htmlType="submit">Submit</Button>}
+
         </Form.Item>
       </Form>
     </div>

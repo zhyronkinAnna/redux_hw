@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Provider store={store}><App /></Provider>,
+    element: <App />,
   },
   {
     path: '/posts',
@@ -43,8 +43,9 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-   
+    <Provider store={store}>
+      <RouterProvider router={router} />
+   </Provider>
   </React.StrictMode>
 );
 
