@@ -1,10 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import Counter from './components/Counter';
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
 
 function App() {
   return (
-    <Counter />
+    <div>
+      <Header />
+      <Outlet />
+    </div>
   );
 }
 

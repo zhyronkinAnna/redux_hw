@@ -1,45 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import PostList from './pages/PostList';
-import Post from './pages/Post';
-import Registration from './pages/Registration';
-import Login from './pages/Login';
-
-
+import { RouterProvider } from 'react-router-dom';
+import router from './routes';
+import { getToken } from './utils/helperFunctions';
+import { fetchUserData } from './slices/authThunk';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: '/posts',
-    element: <PostList />
-  },
-   {
-    path: '/post',
-    element: <Post />
-  },
-  {
-    path: '/registration',
-    element: <Registration />
-  }
-  ,
-  {
-    path: '/login',
-    element: <Login />
-  }
-]);
-
-
+if (getToken()) {
+  store.dispatch(fetchUserData());
+}
 
 root.render(
   <React.StrictMode>

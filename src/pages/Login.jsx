@@ -7,13 +7,12 @@ import { login } from "../slices/authThunk";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getToken } from "../utils/helperFunctions";
 
-
 const Login = () => {
-  const { token, loading, error } = useSelector(state => state.auth);
+  const { token, loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   if (token || getToken()) {
-   return <Navigate to="/" />
+    return <Navigate to="/" />;
   }
 
   const onFinish = async (values) => {
@@ -71,8 +70,13 @@ const Login = () => {
             span: 16,
           }}
         >
-          {loading ? 'Loading...' : <Button type="primary" htmlType="submit">Submit</Button>}
-
+          {loading ? (
+            "Loading..."
+          ) : (
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </div>

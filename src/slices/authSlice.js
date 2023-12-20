@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { login } from "./authThunk";
+import { fetchUserData, login, logout } from "./authThunk";
 
 const initialState = {
     token: null,
-    loading: false,
     userData: {},
+    loading: false,
     error: null
 }
 
@@ -14,9 +14,15 @@ export const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(login.pending, (state, action) => {
-            state.loading = true;
-        })
+        builder
+            .addCase(logout.fulfilled, (state, action) => {
+                state.loading = false;
+                state.token = null;
+                state.userData = {};
+            })
+            .addCase(login.pending, (state, action) => {
+                state.loading = true;
+            })
             .addCase(login.fulfilled, (state, action) => {
                 state.token = action.payload.token;
                 state.userData = action.payload.user;
@@ -25,6 +31,21 @@ export const authSlice = createSlice({
             .addCase(login.rejected, (state, action, error) => {
                 state.loading = false;
                 state.error = action.payload
+            })
+
+            .addCase(fetchUserData.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(fetchUserData.fulfilled, (state, action) => {
+                state.token = action.payload.token;
+                state.userData = action.payload.user;
+                state.loading = false;
+            })
+            .addCase(fetchUserData.rejected, (state, action, error) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.token = null;
+                state.userData = {}
             })
     }
 });
