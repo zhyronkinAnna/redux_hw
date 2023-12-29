@@ -1,0 +1,18 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    background-color: black;
+    height: 3rem;
+}
+
+a{
+    color: grey;
+    text-decoration: none;
+}
+
+a:active, a:focus{
+    color: white;
+}

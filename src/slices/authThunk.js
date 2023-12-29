@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api";
 import { getToken, removeToken, setToken } from '../utils/helperFunctions';
+import { message } from "antd";
 
 export const login = createAsyncThunk('auth/login', async (payload) => {
     const response = await api.post("/login", payload);
@@ -18,6 +19,11 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (paylo
     catch (err) {
         removeToken();
     }
+});
+
+export const registration = createAsyncThunk('auth/registration', async(payload)=>{
+   const response = await api.post("/register", payload);
+   return response.data;
 });
 
 
